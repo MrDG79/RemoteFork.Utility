@@ -98,9 +98,13 @@ namespace RemoteFork.Tools {
             return val.CompareTo(max) > 0 ? max : val;
         }
 
-        public static string ReplaceHexadecimalSymbols(this string txt) {
+        public static string ReplaceHexadecimalSymbols(this string text) {
             const string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
-            return Regex.Replace(txt, r, "", RegexOptions.Compiled);
+            return Regex.Replace(text, r, "", RegexOptions.Compiled);
+        }
+
+        public static string ReplaceUnicodeSymbols(this string text) {
+            return Regex.Replace(text, @"\\u([\dA-Fa-f]{4})", v => ((char)Convert.ToInt32(v.Groups[1].Value, 16)).ToString());
         }
 
         public static NameValueCollection ConvertToNameValue(this IQueryCollection queries) {
