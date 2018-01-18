@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemoteFork.Log\RemoteFork.Log.csproj" />
+    <ProjectReference Include="..\RemoteFork.Settings\RemoteFork.Settings.csproj" />
+  </ItemGroup>
+
+</Project>

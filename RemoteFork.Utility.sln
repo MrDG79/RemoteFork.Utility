@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Log", "RemoteFork.Log\RemoteFork.Log.csproj", "{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Network", "RemoteFork.Network\RemoteFork.Network.csproj", "{BA334CF6-F376-4864-B518-DD0B37AF3142}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Plugins", "RemoteFork.Plugins\RemoteFork.Plugins.csproj", "{589053CD-09E6-4DA0-BB3C-6A677B8D7B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Settings", "RemoteFork.Settings\RemoteFork.Settings.csproj", "{9FFCE598-3B91-4F4E-A764-8FEFF1A87708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Tools", "RemoteFork.Tools\RemoteFork.Tools.csproj", "{1C59276A-696D-411D-9DAF-72C5B143DDA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Utility", "RemoteFork.Utility\RemoteFork.Utility.csproj", "{6D7E9320-4E01-4844-B257-22A209F42E2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA334CF6-F376-4864-B518-DD0B37AF3142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA334CF6-F376-4864-B518-DD0B37AF3142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA334CF6-F376-4864-B518-DD0B37AF3142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA334CF6-F376-4864-B518-DD0B37AF3142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589053CD-09E6-4DA0-BB3C-6A677B8D7B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589053CD-09E6-4DA0-BB3C-6A677B8D7B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589053CD-09E6-4DA0-BB3C-6A677B8D7B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589053CD-09E6-4DA0-BB3C-6A677B8D7B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFCE598-3B91-4F4E-A764-8FEFF1A87708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFCE598-3B91-4F4E-A764-8FEFF1A87708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFCE598-3B91-4F4E-A764-8FEFF1A87708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFCE598-3B91-4F4E-A764-8FEFF1A87708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C59276A-696D-411D-9DAF-72C5B143DDA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C59276A-696D-411D-9DAF-72C5B143DDA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C59276A-696D-411D-9DAF-72C5B143DDA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C59276A-696D-411D-9DAF-72C5B143DDA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7E9320-4E01-4844-B257-22A209F42E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7E9320-4E01-4844-B257-22A209F42E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7E9320-4E01-4844-B257-22A209F42E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7E9320-4E01-4844-B257-22A209F42E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59E4AF1A-531C-4AFC-82CB-76B9C759F9DB}
+	EndGlobalSection
+EndGlobal
