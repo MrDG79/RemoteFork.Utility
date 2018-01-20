@@ -1,17 +1,24 @@
 ﻿namespace RemoteFork.Settings {
-    public class AbstractSettings<T> {
-        public static T Settings { get; protected set; }
-        public SettingsManager<T> SettingsManager { get; }
+    public class AbstractSettings<TM, TS> where TM : AbstractSettings<TM, TS>, new() {
+        private static TM _instance;
+        public static TM Instance => _instance ?? (_instance = new TM());
 
-        protected static T defaultSettings;
+        public TS Settings { get; protected set; }
+        protected SettingsManager<TS> settingsManager { get; }
+
+        protected static TS defaultSettings;
         protected static string fileName;
 
-        public AbstractSettings() {
-            SettingsManager = new SettingsManager<T>(fileName);
-            if (SettingsManager.Settings == null) {
-                SettingsManager.Save(defaultSettings);
+        protected AbstractSettings() {
+            settingsManager = new SettingsManager<TS>(fileName);
+            if (settingsManager.Settings == null) {
+                settingsManager.Save(defaultSettings);
             }
-            Settings = SettingsManager.Settings;
+            Settings = settingsManager.Settings;
+        }
+
+        public void Save() {
+            settingsManager.Save();
         }
     }
 }

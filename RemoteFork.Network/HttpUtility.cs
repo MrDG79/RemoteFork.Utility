@@ -68,8 +68,7 @@ namespace RemoteFork.Network {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
-                        var queryString =
-                            new StringContent(data, Encoding.UTF8, "application/x-www-form-urlencoded");
+                        var queryString = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
 
                         var response = httpClient.PostAsync(url, queryString).Result;
                         return Request(handler, response, url, header, verbose);
@@ -147,8 +146,8 @@ namespace RemoteFork.Network {
                         Log.LogError(exception, "HttpUtility->AddHeader: {0}", exception.Message);
                     }
                 }
-            } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Settings.UserAgent)) {
-                Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Settings.UserAgent);
+            } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Instance.Settings.UserAgent)) {
+                Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Instance.Settings.UserAgent);
             }
         }
 

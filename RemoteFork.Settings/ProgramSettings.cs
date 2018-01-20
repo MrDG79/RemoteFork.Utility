@@ -1,8 +1,7 @@
 ﻿using System.Net;
 
 namespace RemoteFork.Settings {
-    public class ProgramSettings : AbstractSettings<Settings> {
-        //public static Settings Settings { get; }
+    public class ProgramSettings : AbstractSettings<ProgramSettings, Settings> {
         static ProgramSettings() {
             fileName = "Settings.json";
             defaultSettings = DefaultSettings;
