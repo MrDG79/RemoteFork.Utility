@@ -1,18 +1,13 @@
 ﻿using System.Net;
 
 namespace RemoteFork.Settings {
-    public static class ProgramSettings {
-        public static Settings Settings { get; }
-        public static SettingsManager<Settings> SettingsManager { get; }
-
+    public class ProgramSettings : AbstractSettings<Settings> {
+        //public static Settings Settings { get; }
         static ProgramSettings() {
-            SettingsManager = new SettingsManager<Settings>("Settings.json");
-            if (SettingsManager.Settings == null) {
-                SettingsManager.Save(DefaultSettings);
-            }
-            Settings = SettingsManager.Settings;
+            fileName = "Settings.json";
+            defaultSettings = DefaultSettings;
         }
-        
+
         private static Settings DefaultSettings { get; } = new Settings() {
             IpAddress = IPAddress.Parse("0.0.0.0").ToString(),
             Port = ((ushort)8027),
