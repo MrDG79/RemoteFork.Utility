@@ -146,8 +146,8 @@ namespace RemoteFork.Network {
                         Log.LogError(exception, "HttpUtility->AddHeader: {0}", exception.Message);
                     }
                 }
-            } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Instance.Settings.UserAgent)) {
-                Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Instance.Settings.UserAgent);
+            } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Settings.UserAgent)) {
+                Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Settings.UserAgent);
             }
         }
 

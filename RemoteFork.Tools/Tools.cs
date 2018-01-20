@@ -28,9 +28,9 @@ namespace RemoteFork.Tools {
 
             file = Path.GetFullPath(file);
 
-            if (ProgramSettings.Instance.Settings.DlnaDirectories != null) {
-                var filter = new List<string>(ProgramSettings.Instance.Settings.DlnaDirectories);
-                switch (ProgramSettings.Instance.Settings.DlnaFilterType) {
+            if (ProgramSettings.Settings.DlnaDirectories != null) {
+                var filter = new List<string>(ProgramSettings.Settings.DlnaDirectories);
+                switch (ProgramSettings.Settings.DlnaFilterType) {
                     case FilterMode.INCLUSION:
                         if (filter.All(i => !file.StartsWith(i, StringComparison.OrdinalIgnoreCase))) {
                             result = false;
@@ -45,9 +45,9 @@ namespace RemoteFork.Tools {
             }
 
             if (File.Exists(file)) {
-                if ((ProgramSettings.Instance.Settings.DlnaFileExtensions != null) &&
-                    (ProgramSettings.Instance.Settings.DlnaFileExtensions.Length > 0)) {
-                    result = ProgramSettings.Instance.Settings.DlnaFileExtensions.Any(file.EndsWith);
+                if ((ProgramSettings.Settings.DlnaFileExtensions != null) &&
+                    (ProgramSettings.Settings.DlnaFileExtensions.Length > 0)) {
+                    result = ProgramSettings.Settings.DlnaFileExtensions.Any(file.EndsWith);
                 }
             }
 
@@ -55,7 +55,7 @@ namespace RemoteFork.Tools {
         }
 
         public static bool CheckHiddenFile(FileAttributes attributes) {
-            return !ProgramSettings.Instance.Settings.DlnaHiidenFiles &&
+            return !ProgramSettings.Settings.DlnaHiidenFiles &&
                    (((attributes & FileAttributes.Hidden) == FileAttributes.Hidden) ||
                     ((attributes & FileAttributes.System) == FileAttributes.System));
         }

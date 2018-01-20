@@ -9,8 +9,8 @@ namespace RemoteFork.Log {
 
         static Logger() {
             LoggerFactory = new LoggerFactory()
-                .AddConsole((LogLevel)ProgramSettings.Instance.Settings.LogLevel)
-                .AddDebug((LogLevel)ProgramSettings.Instance.Settings.LogLevel)
+                .AddConsole((LogLevel)ProgramSettings.Settings.LogLevel)
+                .AddDebug((LogLevel)ProgramSettings.Settings.LogLevel)
 #if DEBUG
                 .AddFile(Path.Combine(Environment.CurrentDirectory, "Logs/log-{Date}.txt"), isJson: true);
 #else
