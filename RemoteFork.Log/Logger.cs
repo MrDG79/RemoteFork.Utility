@@ -11,11 +11,7 @@ namespace RemoteFork.Log {
             LoggerFactory = new LoggerFactory()
                 .AddConsole((LogLevel)ProgramSettings.Settings.LogLevel)
                 .AddDebug((LogLevel)ProgramSettings.Settings.LogLevel)
-#if DEBUG
-                .AddFile(Path.Combine(Environment.CurrentDirectory, "Logs/log-{Date}.txt"), isJson: true);
-#else
                 .AddFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs/log-{Date}.txt"), isJson: true);
-#endif
         }
 
         private readonly ILogger _logger;

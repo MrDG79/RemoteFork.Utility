@@ -6,11 +6,7 @@ namespace RemoteFork.Settings {
     public class SettingsManager<T> {
         public T Settings { get; private set; }
         
-#if DEBUG
-        private static string PATH = Environment.CurrentDirectory;
-#else
-        private static string PATH = AppDomain.CurrentDomain.BaseDirectory;
-#endif
+        private static readonly string PATH = AppDomain.CurrentDomain.BaseDirectory;
 
         private readonly string _fileName;
 
