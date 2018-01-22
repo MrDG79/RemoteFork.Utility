@@ -48,6 +48,8 @@ namespace RemoteFork.Settings {
         public byte LogLevel { get; set; }
         [JsonProperty(SettingsKey.CHECK_UPDATE)]
         public bool CheckUpdate { get; set; }
+        [JsonProperty(SettingsKey.DEVELOPER_MODE)]
+        public bool DeveloperMode { get; set; }
 
         public class StringArray {
             [JsonProperty]

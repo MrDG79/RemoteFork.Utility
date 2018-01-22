@@ -27,6 +27,7 @@
 
         public const string LOG_LEVEL = "LogLevel";
         public const string CHECK_UPDATE = "CheckUpdate";
+        public const string DEVELOPER_MODE = "DeveloperMode";
     }
 
     public enum FilterMode : byte {

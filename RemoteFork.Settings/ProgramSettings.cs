@@ -30,7 +30,8 @@ namespace RemoteFork.Settings {
             AceStreamPort = 6878,
 
             LogLevel = (byte)5,
-            CheckUpdate = true
+            CheckUpdate = true,
+            DeveloperMode = false
         };
     }
 }
