@@ -132,7 +132,10 @@ namespace RemoteFork.Tools {
         public static string EncodeTo(this string text, string from, string to) {
             var fromEncoding = Encoding.GetEncoding(from);
             var toEncoding = Encoding.GetEncoding(to);
+            return text.EncodeTo(fromEncoding, toEncoding);
+        }
 
+        public static string EncodeTo(this string text, Encoding fromEncoding, Encoding toEncoding) {
             var fromBytes = fromEncoding.GetBytes(text);
             var toBytes = Encoding.Convert(fromEncoding, toEncoding, fromBytes);
 

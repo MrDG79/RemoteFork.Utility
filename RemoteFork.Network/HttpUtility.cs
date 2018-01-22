@@ -60,6 +60,46 @@ namespace RemoteFork.Network {
             }
         }
 
+        public static byte[] PostBytesRequest(string url, string data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            try {
+                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
+                    SetHandler(handler);
+                    using (var httpClient = new HttpClient(handler)) {
+                        AddHeader(httpClient, header);
+
+                        var queryString = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
+
+                        var response = httpClient.PostAsync(url, queryString).Result;
+                        return response.Content.ReadAsByteArrayAsync().Result;
+                    }
+                }
+            } catch (Exception exception) {
+                Log.LogError(exception, exception.Message);
+                return new byte[0];
+            }
+        }
+
+        public static byte[] PostBytesRequest(string url, byte[] data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            try {
+                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
+                    SetHandler(handler);
+                    using (var httpClient = new HttpClient(handler)) {
+                        AddHeader(httpClient, header);
+
+                        var content = new ByteArrayContent(data);
+
+                        var response = httpClient.PostAsync(url, content).Result;
+                        return response.Content.ReadAsByteArrayAsync().Result;
+                    }
+                }
+            } catch (Exception exception) {
+                Log.LogError(exception, exception.Message);
+                return new byte[0];
+            }
+        }
+
         public static string PostRequest(string url, string data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
