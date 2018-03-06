@@ -26,10 +26,10 @@ namespace RemoteFork.Settings {
         public string[] DlnaDirectories { get; set; }
         [JsonProperty(SettingsKey.DLNA_FILE_EXTENSIONS)]
         public string[] DlnaFileExtensions { get; set; }
-        [JsonProperty(SettingsKey.DLNA_HIIDEN_FILES)]
-        public bool DlnaHiidenFiles { get; set; }
-        [JsonProperty(SettingsKey.FILE_BUFFER_SIZE)]
-        public int FileBufferSize { get; set; }
+        //[JsonProperty(SettingsKey.DLNA_HIIDEN_FILES)]
+        //public bool DlnaHiidenFiles { get; set; }
+        //[JsonProperty(SettingsKey.FILE_BUFFER_SIZE)]
+        //public int FileBufferSize { get; set; }
 
         [JsonProperty(SettingsKey.PLUGINS)]
         public bool Plugins { get; set; }
@@ -50,10 +50,5 @@ namespace RemoteFork.Settings {
         public bool CheckUpdate { get; set; }
         [JsonProperty(SettingsKey.DEVELOPER_MODE)]
         public bool DeveloperMode { get; set; }
-
-        public class StringArray {
-            [JsonProperty]
-            public string Value { get; set; }
-        }
     }
 }

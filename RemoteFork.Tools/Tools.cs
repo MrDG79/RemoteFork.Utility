@@ -15,13 +15,13 @@ namespace RemoteFork.Tools {
     public static class Tools {
         #region CheckAccess
 
-        public static bool CheckAccessPath(DirectoryInfo directory) {
-            return !CheckHiddenFile(directory.Attributes) && CheckAccessPath(directory.FullName);
-        }
+        //public static bool CheckAccessPath(DirectoryInfo directory) {
+        //    return !CheckHiddenFile(directory.Attributes) && CheckAccessPath(directory.FullName);
+        //}
 
-        public static bool CheckAccessPath(FileInfo file) {
-            return !CheckHiddenFile(file.Attributes) && CheckAccessPath(file.FullName);
-        }
+        //public static bool CheckAccessPath(FileInfo file) {
+        //    return !CheckHiddenFile(file.Attributes) && CheckAccessPath(file.FullName);
+        //}
 
         public static bool CheckAccessPath(string file) {
             bool result = true;
@@ -54,11 +54,11 @@ namespace RemoteFork.Tools {
             return result;
         }
 
-        public static bool CheckHiddenFile(FileAttributes attributes) {
-            return !ProgramSettings.Settings.DlnaHiidenFiles &&
-                   (((attributes & FileAttributes.Hidden) == FileAttributes.Hidden) ||
-                    ((attributes & FileAttributes.System) == FileAttributes.System));
-        }
+        //public static bool CheckHiddenFile(FileAttributes attributes) {
+        //    return !ProgramSettings.Settings.DlnaHiidenFiles &&
+        //           (((attributes & FileAttributes.Hidden) == FileAttributes.Hidden) ||
+        //            ((attributes & FileAttributes.System) == FileAttributes.System));
+        //}
 
         #endregion CheckAccess
 

@@ -19,8 +19,8 @@ namespace RemoteFork.Settings {
             DlnaFilterType = FilterMode.NONE,
             DlnaDirectories = (new string[0]),
             DlnaFileExtensions = (new string[0]),
-            DlnaHiidenFiles = false,
-            FileBufferSize = (int)262144,
+            //DlnaHiidenFiles = false,
+            //FileBufferSize = (int)262144,
 
             Plugins = true,
             EnablePlugins = new string[0],
