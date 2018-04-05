@@ -6,17 +6,22 @@ namespace RemoteFork.Settings {
         public string IpAddress { get; set; }
         [JsonProperty(SettingsKey.PORT)]
         public ushort Port { get; set; }
+        [JsonProperty(SettingsKey.LISTEN_LOCALHOST)]
+        public bool ListenLocalhost { get; set; }
 
-        //[JsonProperty(SettingsManager.SettingsKey.UseProxy)]
-        //public bool UseProxy { get; set; }
+        [JsonProperty(SettingsKey.USE_PROXY)]
+        public bool UseProxy { get; set; }
+        [JsonProperty(SettingsKey.PROXY_NOT_DEFAULT_ENABLE)]
+        public bool ProxyNotDefaultEnable { get; set; }
+        [JsonProperty(SettingsKey.PROXY_ADDRESS)]
+        public string ProxyAddress { get; set; }
+        [JsonProperty(SettingsKey.PROXY_USER_NAME)]
+        public string ProxyUserName { get; set; }
+        [JsonProperty(SettingsKey.PROXY_PASSWORD)]
+        public string ProxyPassword { get; set; }
 
         [JsonProperty(SettingsKey.USER_AGENT)]
         public string UserAgent { get; set; }
-
-        //[JsonProperty(SettingsManager.SettingsKey.AutoStartWindows)]
-        //public bool AutoStartWindows { get; set; }
-        //[JsonProperty(SettingsManager.SettingsKey.AutoStartServer)]
-        //public bool AutoStartServer { get; set; }
 
         [JsonProperty(SettingsKey.DLNA)]
         public bool Dlna { get; set; }
@@ -26,10 +31,6 @@ namespace RemoteFork.Settings {
         public string[] DlnaDirectories { get; set; }
         [JsonProperty(SettingsKey.DLNA_FILE_EXTENSIONS)]
         public string[] DlnaFileExtensions { get; set; }
-        //[JsonProperty(SettingsKey.DLNA_HIIDEN_FILES)]
-        //public bool DlnaHiidenFiles { get; set; }
-        //[JsonProperty(SettingsKey.FILE_BUFFER_SIZE)]
-        //public int FileBufferSize { get; set; }
 
         [JsonProperty(SettingsKey.PLUGINS)]
         public bool Plugins { get; set; }
@@ -38,9 +39,7 @@ namespace RemoteFork.Settings {
 
         [JsonProperty(SettingsKey.USER_URLS)]
         public string[] UserUrls { get; set; }
-
-        //[JsonProperty(SettingsManager.SettingsKey.THVPAutoStart)]
-        //public bool THVPAutoStart { get; set; }
+        
         [JsonProperty(SettingsKey.ACE_STREAM_PORT)]
         public ushort AceStreamPort { get; set; }
 

@@ -24,7 +24,10 @@ namespace RemoteFork.Tools {
         //}
 
         public static bool CheckAccessPath(string file) {
-            bool result = true;
+            bool result = ProgramSettings.Settings.Dlna;
+            if (!result) {
+                return false;
+            }
 
             file = Path.GetFullPath(file);
 

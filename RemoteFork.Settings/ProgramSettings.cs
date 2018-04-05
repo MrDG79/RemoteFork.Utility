@@ -9,8 +9,10 @@ namespace RemoteFork.Settings {
 
         private static Settings DefaultSettings { get; } = new Settings() {
             IpAddress = IPAddress.Parse("0.0.0.0").ToString(),
-            Port = ((ushort)8027),
-            //UseProxy = false,
+            Port = (ushort) 8027,
+            ListenLocalhost = true,
+            UseProxy = false,
+            ProxyNotDefaultEnable = false,
 
             UserAgent =
                 "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
@@ -27,7 +29,7 @@ namespace RemoteFork.Settings {
 
             UserUrls = new string[0],
 
-            AceStreamPort = 6878,
+            AceStreamPort = (ushort)6878,
 
             LogLevel = (byte)5,
             CheckUpdate = true,

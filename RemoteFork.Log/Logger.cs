@@ -40,6 +40,10 @@ namespace RemoteFork.Log {
             _logger.LogError(format, args);
         }
 
+        public void LogError(Exception exception) {
+            _logger.LogError(exception, exception.Message);
+        }
+
         public void LogError(Exception exception, string message) {
             _logger.LogError(exception, message);
         }

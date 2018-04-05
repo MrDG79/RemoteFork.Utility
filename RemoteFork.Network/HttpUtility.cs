@@ -13,6 +13,8 @@ namespace RemoteFork.Network {
 
         private static readonly CookieContainer CookieContainer = new CookieContainer();
 
+        private static WebProxy Proxy { get; set; }
+
         static HTTPUtility() {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls;
             ServicePointManager.ServerCertificateValidationCallback +=
@@ -21,8 +23,7 @@ namespace RemoteFork.Network {
 
         public static byte[] GetBytesRequest(string url, Dictionary<string, string> header = null, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
@@ -41,8 +42,7 @@ namespace RemoteFork.Network {
         public static string GetRequest(string url, Dictionary<string, string> header = null, bool verbose = false,
             bool databyte = false, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
@@ -61,8 +61,7 @@ namespace RemoteFork.Network {
         public static byte[] PostBytesRequest(string url, string data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -73,7 +72,7 @@ namespace RemoteFork.Network {
                     }
                 }
             } catch (Exception exception) {
-                Log.LogError(exception, exception.Message);
+                Log.LogError(exception);
                 return new byte[0];
             }
         }
@@ -81,8 +80,7 @@ namespace RemoteFork.Network {
         public static byte[] PostBytesRequest(string url, byte[] data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -93,7 +91,7 @@ namespace RemoteFork.Network {
                     }
                 }
             } catch (Exception exception) {
-                Log.LogError(exception, exception.Message);
+                Log.LogError(exception);
                 return new byte[0];
             }
         }
@@ -101,8 +99,7 @@ namespace RemoteFork.Network {
         public static string PostRequest(string url, string data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -113,16 +110,14 @@ namespace RemoteFork.Network {
                     }
                 }
             } catch (Exception exception) {
-                Log.LogError(exception, exception.Message);
+                Log.LogError(exception);
                 return exception.Message;
             }
         }
-
         public static string PostRequest(string url, byte[] data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
-                using (var handler = new HttpClientHandler() { AllowAutoRedirect = autoredirect }) {
-                    SetHandler(handler, url, header);
+                using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -133,7 +128,7 @@ namespace RemoteFork.Network {
                     }
                 }
             } catch (Exception exception) {
-                Log.LogError(exception, exception.Message);
+                Log.LogError(exception);
                 return exception.Message;
             }
         }
@@ -159,15 +154,40 @@ namespace RemoteFork.Network {
             return result;
         }
 
-        private static void SetHandler(HttpClientHandler handler, string url, Dictionary<string,string> header) {
-            CheckCookiesInHeader(url, header);
+        public static void CreateProxy(string proxyUri = null, string userName = null, string password = null) {
+            if (!string.IsNullOrEmpty(proxyUri)) {
+                NetworkCredential proxyCreds = null;
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+                    proxyCreds = new NetworkCredential(userName, password);
 
-            handler.Proxy = WebRequest.DefaultWebProxy;
-            handler.CookieContainer = CookieContainer;
-            handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+                Proxy = new WebProxy(proxyUri, false);
+
+                if (proxyCreds != null) {
+                    Proxy.Credentials = proxyCreds;
+                    Proxy.UseDefaultCredentials = false;
+                }
+            } else {
+                Proxy = null;
+            }
         }
 
-        public static void AddHeader(HttpClient httpClient, Dictionary<string, string> header) {
+        private static HttpClientHandler CreateClientHandler(string url, Dictionary<string, string> header, bool autoredirect, bool useProxy = false) {
+            ParseCookiesInHeader(url, header);
+
+            var handler = new HttpClientHandler() {
+                AllowAutoRedirect = autoredirect,
+                Proxy = ProgramSettings.Settings.UseProxy &&
+                        (useProxy || !ProgramSettings.Settings.ProxyNotDefaultEnable) && Proxy != null
+                    ? Proxy
+                    : WebRequest.DefaultWebProxy,
+                CookieContainer = CookieContainer,
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            };
+
+            return handler;
+        }
+
+        private static void AddHeader(HttpClient httpClient, Dictionary<string, string> header) {
             if (header != null) {
                 foreach (var h in header) {
                     if (h.Key != "Cookie") {
@@ -190,7 +210,7 @@ namespace RemoteFork.Network {
             try {
                 return context.ReadAsStringAsync().Result;
             } catch (Exception exception1) {
-                Log.LogError(exception1, exception1.Message);
+                Log.LogError(exception1);
 
                 Log.LogInformation($"charset={context.Headers.ContentType.CharSet}");
                 var result = context.ReadAsByteArrayAsync().Result;
@@ -224,7 +244,7 @@ namespace RemoteFork.Network {
             }
         }
 
-        private static void CheckCookiesInHeader(string url, Dictionary<string, string> header = null) {
+        private static void ParseCookiesInHeader(string url, Dictionary<string, string> header = null) {
             if (header != null) {
                 if (header.ContainsKey("Cookie")) {
                     var uri = new Uri(url);

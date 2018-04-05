@@ -1,9 +1,14 @@
 ﻿namespace RemoteFork.Settings {
     public static class SettingsKey {
         public const string IP_ADDRESS = "IpIPAddress";
-
         public const string PORT = "Port";
-        //public const string UseProxy = "UseProxy";
+        public const string LISTEN_LOCALHOST = "ListemLocalhost";
+
+        public const string USE_PROXY = "UseProxy";
+        public const string PROXY_NOT_DEFAULT_ENABLE = "PROXY_NOT_DEFAULT_ENABLE";
+        public const string PROXY_ADDRESS = "ProxyAddress";
+        public const string PROXY_USER_NAME = "ProxyUserName";
+        public const string PROXY_PASSWORD = "ProxyPassword";
 
         public const string USER_AGENT = "UserAgent";
 
