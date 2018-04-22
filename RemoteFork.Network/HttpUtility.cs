@@ -184,6 +184,9 @@ namespace RemoteFork.Network {
                 AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
             };
 
+            // FIX: http://forkplayer.tv/forums/topic/тест-кросс-платформенной-версии/page/16/#post-19229
+            // В .Net Core параметры "ServicePointManager" игнорируются в "HttpClient"
+            handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             return handler;
         }
 
