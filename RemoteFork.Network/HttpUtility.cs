@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -184,6 +184,7 @@ namespace RemoteFork.Network {
                 AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
             };
 
+            handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             return handler;
         }
 
