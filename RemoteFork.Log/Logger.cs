@@ -9,9 +9,10 @@ namespace RemoteFork.Log {
 
         static Logger() {
             LoggerFactory = new LoggerFactory()
-                .AddConsole((LogLevel)ProgramSettings.Settings.LogLevel)
-                .AddDebug((LogLevel)ProgramSettings.Settings.LogLevel)
-                .AddFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs/log-{Date}.txt"), isJson: true);
+                .AddConsole((LogLevel) ProgramSettings.Settings.LogLevel)
+                .AddDebug((LogLevel) ProgramSettings.Settings.LogLevel)
+                .AddFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs/log-{Date}.txt"), isJson: false,
+                    minimumLevel: (LogLevel)ProgramSettings.Settings.LogLevel);
         }
 
         private readonly ILogger _logger;

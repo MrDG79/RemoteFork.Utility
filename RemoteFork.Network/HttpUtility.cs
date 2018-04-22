@@ -160,7 +160,7 @@ namespace RemoteFork.Network {
                 if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
                     proxyCreds = new NetworkCredential(userName, password);
 
-                Proxy = new WebProxy(proxyUri, false);
+                Proxy = new WebProxy(proxyUri, true);
 
                 if (proxyCreds != null) {
                     Proxy.Credentials = proxyCreds;
