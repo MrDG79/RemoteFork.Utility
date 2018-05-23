@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using RemoteFork.Log;
 using RemoteFork.Settings;
 
@@ -65,9 +66,11 @@ namespace RemoteFork.Network {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
-                        var queryString = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
+                        var content = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
 
-                        var response = httpClient.PostAsync(url, queryString).Result;
+                        SetContentType(content, header);
+
+                        var response = httpClient.PostAsync(url, content).Result;
                         return response.Content.ReadAsByteArrayAsync().Result;
                     }
                 }
@@ -86,6 +89,8 @@ namespace RemoteFork.Network {
 
                         var content = new ByteArrayContent(data);
 
+                        SetContentType(content, header);
+
                         var response = httpClient.PostAsync(url, content).Result;
                         return response.Content.ReadAsByteArrayAsync().Result;
                     }
@@ -103,9 +108,11 @@ namespace RemoteFork.Network {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
-                        var queryString = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
+                        var content = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
+                        
+                        SetContentType(content, header);
 
-                        var response = httpClient.PostAsync(url, queryString).Result;
+                        var response = httpClient.PostAsync(url, content).Result;
                         return Request(response, verbose);
                     }
                 }
@@ -114,6 +121,7 @@ namespace RemoteFork.Network {
                 return exception.Message;
             }
         }
+
         public static string PostRequest(string url, byte[] data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
@@ -154,6 +162,16 @@ namespace RemoteFork.Network {
             return result;
         }
 
+        private static void SetContentType(HttpContent content, Dictionary<string, string> header) {
+            try {
+                if (header != null && header.ContainsKey("Content-Type")) {
+                    content.Headers.ContentType = new MediaTypeHeaderValue(header["Content-Type"]);
+                }
+            } catch (Exception exception) {
+                Log.LogError(exception);
+            }
+        }
+
         public static void CreateProxy(string proxyUri = null, string userName = null, string password = null) {
             if (!string.IsNullOrEmpty(proxyUri)) {
                 NetworkCredential proxyCreds = null;
@@ -191,15 +209,19 @@ namespace RemoteFork.Network {
         private static void AddHeader(HttpClient httpClient, Dictionary<string, string> header) {
             if (header != null) {
                 foreach (var h in header) {
-                    if (h.Key != "Cookie") {
-                        try {
-                            Log.LogDebug($"{h.Key} set={h.Value}");
-                            if (!httpClient.DefaultRequestHeaders.TryAddWithoutValidation(h.Key, h.Value)) {
-                                Log.LogDebug("NOT ADD");
+                    switch (h.Key) {
+                        case "Cookie": continue;
+                        default: {
+                            try {
+                                Log.LogDebug($"{h.Key} set={h.Value}");
+                                if (!httpClient.DefaultRequestHeaders.TryAddWithoutValidation(h.Key, h.Value)) {
+                                    Log.LogDebug("NOT ADD");
+                                }
+                            } catch (Exception exception) {
+                                Log.LogError(exception, "HttpUtility->AddHeader: {0}", exception.Message);
                             }
-                        } catch (Exception exception) {
-                            Log.LogError(exception, "HttpUtility->AddHeader: {0}", exception.Message);
                         }
+                            break;
                     }
                 }
             } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Settings.UserAgent)) {
