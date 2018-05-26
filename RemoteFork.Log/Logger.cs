@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using RemoteFork.Log.Analytics;
 using RemoteFork.Settings;
 
 namespace RemoteFork.Log {
@@ -8,11 +9,14 @@ namespace RemoteFork.Log {
         private static readonly ILoggerFactory LoggerFactory;
 
         static Logger() {
+            var logLevel = (LogLevel) ProgramSettings.Settings.LogLevel;
             LoggerFactory = new LoggerFactory()
-                .AddConsole((LogLevel) ProgramSettings.Settings.LogLevel)
-                .AddDebug((LogLevel) ProgramSettings.Settings.LogLevel)
+                .AddConsole(logLevel)
+                .AddDebug(logLevel)
                 .AddFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs/log-{Date}.txt"), isJson: false,
-                    minimumLevel: (LogLevel)ProgramSettings.Settings.LogLevel);
+                    minimumLevel: logLevel);
+
+            LoggerFactory.AddProvider(new GALoggerProvider(new GALoggingConfiguration() {LogLevel = LogLevel.Error}));
         }
 
         private readonly ILogger _logger;
