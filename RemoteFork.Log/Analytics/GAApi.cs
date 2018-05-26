@@ -63,7 +63,7 @@ namespace RemoteFork.Log.Analytics {
         }
 
         private static void Track(Dictionary<string, string> postData) {
-            var request = (HttpWebRequest) WebRequest.Create("http://www.google-analytics.com/collect");
+            var request = (HttpWebRequest) WebRequest.Create("https://www.google-analytics.com/collect");
             request.Method = "POST";
             string postDataString = postData
                 .Aggregate("", (data, next) => string.Format("{0}&{1}={2}", data, next.Key,
