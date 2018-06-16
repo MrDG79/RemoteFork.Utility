@@ -9,5 +9,6 @@ namespace RemoteFork.Plugins {
         public string Description;
         public string Version;
         public string Author;
+        public string Github;
     }
 }
