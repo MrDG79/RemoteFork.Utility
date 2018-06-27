@@ -5,5 +5,7 @@ namespace RemoteFork.Plugins {
         NameValueCollection GetRequestParams();
 
         string CreatePluginUrl(NameValueCollection parameters);
+
+        string GetLatestVersionNumber(string id);
     }
 }

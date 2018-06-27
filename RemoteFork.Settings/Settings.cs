@@ -49,5 +49,7 @@ namespace RemoteFork.Settings {
         public bool CheckUpdate { get; set; }
         [JsonProperty(SettingsKey.DEVELOPER_MODE)]
         public bool DeveloperMode { get; set; }
+
+        public string UID { get; set; }
     }
 }

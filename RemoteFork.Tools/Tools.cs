@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -66,12 +67,12 @@ namespace RemoteFork.Tools {
         #endregion CheckAccess
 
         public static IPAddress[] GetIPAddresses() {
-            var hostEntry = Dns.GetHostEntry(Dns.GetHostName());
-            var addressList = hostEntry.AddressList;
-            return (from iPAddress in addressList
-                    let flag = iPAddress.AddressFamily == AddressFamily.InterNetwork
-                    where flag
-                    select iPAddress)
+            //return new IPAddress[0];
+
+            return NetworkInterface.GetAllNetworkInterfaces()
+                .SelectMany(i => i.GetIPProperties().UnicastAddresses)
+                .Select(a => a.Address)
+                .Where(a => a.AddressFamily == AddressFamily.InterNetwork)
                 .ToArray();
         }
 

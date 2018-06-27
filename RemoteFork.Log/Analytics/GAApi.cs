@@ -6,15 +6,22 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using RemoteFork.Settings;
 
 namespace RemoteFork.Log.Analytics {
     public static class GAApi {
         public const string TRACKER_ID = "UA-119885832-1";
 
-        private static string anonymUserId;
-        private static string AnonymUserId => !string.IsNullOrEmpty(anonymUserId)
-            ? anonymUserId
-            : (anonymUserId = Guid.NewGuid().ToString());
+        private static string UserId {
+            get {
+                if (string.IsNullOrEmpty(ProgramSettings.Settings.UID)) {
+                    ProgramSettings.Settings.UID = Guid.NewGuid().ToString();
+                    ProgramSettings.Instance.Save();
+                }
+
+                return ProgramSettings.Settings.UID;
+            }
+        }
 
         public static void TrackEvent(string category, string action, string label) {
             TrackEvent(HitType.@event, category, action, label);
@@ -36,7 +43,7 @@ namespace RemoteFork.Log.Analytics {
             var postData = new Dictionary<string, string> {
                 {"v", "1"},
                 {"tid", TRACKER_ID},
-                {"cid", AnonymUserId},
+                {"cid", UserId},
                 {"t", type.ToString()},
                 {"ec", category},
                 {"ea", action},
@@ -54,7 +61,7 @@ namespace RemoteFork.Log.Analytics {
             var postData = new Dictionary<string, string> {
                 {"v", "1"},
                 {"tid", TRACKER_ID},
-                {"cid", AnonymUserId},
+                {"cid", UserId},
                 {"t", type.ToString()},
                 {"dl", page},
             };
