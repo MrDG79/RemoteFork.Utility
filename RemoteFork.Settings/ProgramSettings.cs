@@ -12,17 +12,16 @@ namespace RemoteFork.Settings {
             Port = (ushort) 8027,
             ListenLocalhost = true,
             UseProxy = false,
+            ProxyType = ProxyType.HTTP,
             ProxyNotDefaultEnable = false,
 
             UserAgent =
                 "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
 
-            Dlna = true,
-            DlnaFilterType = FilterMode.INCLUSION,
+            Dlna = false,
+            DlnaFilterType = FilterMode.NONE,
             DlnaDirectories = (new string[0]),
             DlnaFileExtensions = (new string[0]),
-            //DlnaHiidenFiles = false,
-            //FileBufferSize = (int)262144,
 
             Plugins = true,
             EnablePlugins = new string[0],

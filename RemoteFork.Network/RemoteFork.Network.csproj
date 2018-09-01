@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SocksSharp" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RemoteFork.Log\RemoteFork.Log.csproj" />
     <ProjectReference Include="..\RemoteFork.Settings\RemoteFork.Settings.csproj" />
   </ItemGroup>

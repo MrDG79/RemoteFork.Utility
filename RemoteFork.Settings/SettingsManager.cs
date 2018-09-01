@@ -16,12 +16,12 @@ namespace RemoteFork.Settings {
         }
 
         public void Save() {
-            Save(JsonConvert.SerializeObject(Settings));
+            Save(JsonConvert.SerializeObject(Settings, Formatting.Indented));
         }
 
         public void Save(T settings) {
             Settings = settings;
-            Save(JsonConvert.SerializeObject(Settings));
+            Save(JsonConvert.SerializeObject(Settings, Formatting.Indented));
         }
 
         private void Save(string json) {

@@ -5,8 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using RemoteFork.Log;
 using RemoteFork.Settings;
+using SocksSharp;
+using SocksSharp.Proxy;
 
 namespace RemoteFork.Network {
     public static class HTTPUtility {
@@ -14,7 +17,8 @@ namespace RemoteFork.Network {
 
         private static readonly CookieContainer CookieContainer = new CookieContainer();
 
-        private static WebProxy Proxy { get; set; }
+        private static IWebProxy Proxy { get; set; }
+        private static ProxySettings ProxySettings { get; set; }
 
         static HTTPUtility() {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls;
@@ -22,16 +26,22 @@ namespace RemoteFork.Network {
                 (sender, cert, chain, sslPolicyErrors) => true;
         }
 
-        public static byte[] GetBytesRequest(string url, Dictionary<string, string> header = null, bool autoredirect = true) {
+        public static byte[] GetBytesRequest(string url, Dictionary<string, string> header = null,
+            bool autoredirect = true) {
+            return GetBytesRequestAsync(url, header, autoredirect).Result;
+        }
+
+        public static async Task<byte[]> GetBytesRequestAsync(string url, Dictionary<string, string> header = null,
+            bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
 
-                        var response = httpClient.GetAsync(url).Result;
+                        var response = await httpClient.GetAsync(url);
 
-                        return response.Content.ReadAsByteArrayAsync().Result;
+                        return await response.Content.ReadAsByteArrayAsync();
                     }
                 }
             } catch (Exception exception) {
@@ -42,13 +52,18 @@ namespace RemoteFork.Network {
 
         public static string GetRequest(string url, Dictionary<string, string> header = null, bool verbose = false,
             bool databyte = false, bool autoredirect = true) {
+            return GetRequestAsync(url, header, verbose, databyte, autoredirect).Result;
+        }
+
+        public static async Task<string> GetRequestAsync(string url, Dictionary<string, string> header = null, bool verbose = false,
+            bool databyte = false, bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
 
-                        var response = httpClient.GetAsync(url).Result;
+                        var response = await httpClient.GetAsync(url);
 
                         return Request(response, verbose);
                     }
@@ -61,17 +76,23 @@ namespace RemoteFork.Network {
 
         public static byte[] PostBytesRequest(string url, string data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            return PostBytesRequestAsync(url, data, header, verbose, autoredirect).Result;
+        }
+
+        public static async Task<byte[]> PostBytesRequestAsync(string url, string data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
-                        var content = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
+                        var content = new StringContent(data, Encoding.GetEncoding(1251),
+                            "application/x-www-form-urlencoded");
 
                         SetContentType(content, header);
 
-                        var response = httpClient.PostAsync(url, content).Result;
-                        return response.Content.ReadAsByteArrayAsync().Result;
+                        var response = await httpClient.PostAsync(url, content);
+                        return await response.Content.ReadAsByteArrayAsync();
                     }
                 }
             } catch (Exception exception) {
@@ -82,6 +103,11 @@ namespace RemoteFork.Network {
 
         public static byte[] PostBytesRequest(string url, byte[] data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            return PostBytesRequestAsync(url, data, header, verbose, autoredirect).Result;
+        }
+
+        public static async Task<byte[]> PostBytesRequestAsync(string url, byte[] data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
@@ -91,8 +117,8 @@ namespace RemoteFork.Network {
 
                         SetContentType(content, header);
 
-                        var response = httpClient.PostAsync(url, content).Result;
-                        return response.Content.ReadAsByteArrayAsync().Result;
+                        var response = await httpClient.PostAsync(url, content);
+                        return await response.Content.ReadAsByteArrayAsync();
                     }
                 }
             } catch (Exception exception) {
@@ -103,16 +129,22 @@ namespace RemoteFork.Network {
 
         public static string PostRequest(string url, string data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            return PostRequestAsync(url, data, header, verbose, autoredirect).Result;
+        }
+
+        public static async Task<string> PostRequestAsync(string url, string data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
-                        var content = new StringContent(data, Encoding.GetEncoding(1251), "application/x-www-form-urlencoded");
-                        
+                        var content = new StringContent(data, Encoding.GetEncoding(1251),
+                            "application/x-www-form-urlencoded");
+
                         SetContentType(content, header);
 
-                        var response = httpClient.PostAsync(url, content).Result;
+                        var response = await httpClient.PostAsync(url, content);
                         return Request(response, verbose);
                     }
                 }
@@ -124,6 +156,11 @@ namespace RemoteFork.Network {
 
         public static string PostRequest(string url, byte[] data,
             Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            return PostRequestAsync(url, data, header, verbose, autoredirect).Result;
+        }
+
+        public static async Task<string> PostRequestAsync(string url, byte[] data,
+            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
             try {
                 using (var handler = CreateClientHandler(url, header, autoredirect)) {
                     using (var httpClient = new HttpClient(handler)) {
@@ -131,7 +168,7 @@ namespace RemoteFork.Network {
 
                         var content = new ByteArrayContent(data);
 
-                        var response = httpClient.PostAsync(url, content).Result;
+                        var response = await httpClient.PostAsync(url, content);
                         return Request(response, verbose);
                     }
                 }
@@ -154,6 +191,7 @@ namespace RemoteFork.Network {
                         sh += i.Key + ": " + j + Environment.NewLine;
                     }
                 }
+
                 result = $"{sh}{Environment.NewLine}{ReadContext(response.Content)}";
             } else {
                 result = ReadContext(response.Content);
@@ -172,38 +210,87 @@ namespace RemoteFork.Network {
             }
         }
 
-        public static void CreateProxy(string proxyUri = null, string userName = null, string password = null) {
-            if (!string.IsNullOrEmpty(proxyUri)) {
+        public static void CreateProxy(string proxyUri = null, int? proxyPort = null, string userName = null,
+            string password = null) {
+            if (!string.IsNullOrEmpty(proxyUri) && proxyPort != null) {
                 NetworkCredential proxyCreds = null;
-                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
-                    proxyCreds = new NetworkCredential(userName, password);
 
-                Proxy = new WebProxy(proxyUri, true);
+                ProxySettings = new ProxySettings() {
+                    Host = proxyUri,
+                    Port = proxyPort.Value,
+                };
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password)) {
+                    ProxySettings.SetCredential(userName, password);
+                }
+
+                Proxy = new WebProxy($"{proxyUri}:{proxyPort.Value}", true);
+
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password)) {
+                    proxyCreds = new NetworkCredential(userName, password);
+                }
 
                 if (proxyCreds != null) {
                     Proxy.Credentials = proxyCreds;
-                    Proxy.UseDefaultCredentials = false;
                 }
             } else {
+                ProxySettings = null;
                 Proxy = null;
             }
         }
 
-        private static HttpClientHandler CreateClientHandler(string url, Dictionary<string, string> header, bool autoredirect, bool useProxy = false) {
+        private static HttpMessageHandler CreateClientHandler(string url, Dictionary<string, string> header,
+            bool autoredirect, bool useProxy = false) {
             ParseCookiesInHeader(url, header);
+            HttpMessageHandler result = null;
+            if (ProgramSettings.Settings.UseProxy && ProxySettings != null) {
+                switch (ProgramSettings.Settings.ProxyType) {
+                    case ProxyType.SOCKS4: {
+                        var handler = new ProxyClientHandler<Socks4>(ProxySettings) {
+                            CookieContainer = CookieContainer,
+                        };
+                        handler.ServerCertificateCustomValidationCallback +=
+                            (sender, cert, chain, sslPolicyErrors) => true;
+                        result = handler;
+                    }
+                        break;
+                    case ProxyType.SOCKS4A: {
+                        var handler = new ProxyClientHandler<Socks4a>(ProxySettings) {
+                            CookieContainer = CookieContainer,
+                        };
+                        handler.ServerCertificateCustomValidationCallback +=
+                            (sender, cert, chain, sslPolicyErrors) => true;
+                        result = handler;
+                    }
+                        break;
+                    case ProxyType.SOCKS5: {
+                        var handler = new ProxyClientHandler<Socks5>(ProxySettings) {
+                            CookieContainer = CookieContainer,
+                        };
+                        handler.ServerCertificateCustomValidationCallback +=
+                            (sender, cert, chain, sslPolicyErrors) => true;
+                        result = handler;
+                    }
+                        break;
+                }
 
-            var handler = new HttpClientHandler() {
-                AllowAutoRedirect = autoredirect,
-                Proxy = ProgramSettings.Settings.UseProxy &&
-                        (useProxy || !ProgramSettings.Settings.ProxyNotDefaultEnable) && Proxy != null
-                    ? Proxy
-                    : WebRequest.DefaultWebProxy,
-                CookieContainer = CookieContainer,
-                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
-            };
+            }
 
-            handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            return handler;
+            if (result == null) {
+                var handler = new HttpClientHandler() {
+                    AllowAutoRedirect = autoredirect,
+                    Proxy = ProgramSettings.Settings.UseProxy &&
+                            (useProxy || !ProgramSettings.Settings.ProxyNotDefaultEnable)
+                            && Proxy != null
+                        ? Proxy
+                        : WebRequest.DefaultWebProxy,
+                    CookieContainer = CookieContainer,
+                    AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+                };
+                handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                result = handler;
+            }
+
+            return result;
         }
 
         private static void AddHeader(HttpClient httpClient, Dictionary<string, string> header) {
@@ -263,6 +350,7 @@ namespace RemoteFork.Network {
                         }
                     }
                 }
+
                 return Encoding.Default.GetString(result);
             }
         }
