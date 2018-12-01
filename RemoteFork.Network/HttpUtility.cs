@@ -311,8 +311,12 @@ namespace RemoteFork.Network {
                             break;
                     }
                 }
-            } else if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Settings.UserAgent)) {
-                Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Settings.UserAgent);
+            }
+
+            if (httpClient.DefaultRequestHeaders.UserAgent.Count == 0) {
+                if (!httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(ProgramSettings.Settings.UserAgent)) {
+                    Log.LogDebug("HttpUtility->AddUserAgent: {0}", ProgramSettings.Settings.UserAgent);
+                }
             }
         }
 
