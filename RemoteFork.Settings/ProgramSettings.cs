@@ -32,7 +32,9 @@ namespace RemoteFork.Settings {
 
             LogLevel = (byte)5,
             CheckUpdate = true,
-            DeveloperMode = false
+            DeveloperMode = false,
+
+            StartPageModernStyle = false
         };
     }
 }

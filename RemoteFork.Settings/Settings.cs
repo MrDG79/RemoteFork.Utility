@@ -32,6 +32,8 @@ namespace RemoteFork.Settings {
         public bool CheckUpdate { get; set; }
         public bool DeveloperMode { get; set; }
 
+        public bool StartPageModernStyle { get; set; }
+
         public string UID { get; set; }
     }
 }

@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RemoteFork.Log\RemoteFork.Log.csproj" />
     <ProjectReference Include="..\RemoteFork.Network\RemoteFork.Network.csproj" />
+    <ProjectReference Include="..\RemoteFork.Items\RemoteFork.Items.csproj" />
     <ProjectReference Include="..\RemoteFork.Plugins\RemoteFork.Plugins.csproj" />
     <ProjectReference Include="..\RemoteFork.Settings\RemoteFork.Settings.csproj" />
     <ProjectReference Include="..\RemoteFork.Tools\RemoteFork.Tools.csproj" />

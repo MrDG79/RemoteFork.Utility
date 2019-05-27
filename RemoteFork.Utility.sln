@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteFork.Log", "RemoteFork.Log\RemoteFork.Log.csproj", "{8AD28FD5-6281-4953-9A07-B0CBF37DBDB6}"
 EndProject
@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteFork.Tools", "RemoteF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteFork.Utility", "RemoteFork.Utility\RemoteFork.Utility.csproj", "{6D7E9320-4E01-4844-B257-22A209F42E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Torrents", "RemoteFork.Torrents\RemoteFork.Torrents.csproj", "{754A3F90-756C-4C00-916F-4D78306FC663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteFork.Torrents", "RemoteFork.Torrents\RemoteFork.Torrents.csproj", "{754A3F90-756C-4C00-916F-4D78306FC663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFork.Items", "RemoteFork.Items\RemoteFork.Items.csproj", "{BB15C9BB-ADBF-46C4-8797-9676FCED7D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{754A3F90-756C-4C00-916F-4D78306FC663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{754A3F90-756C-4C00-916F-4D78306FC663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{754A3F90-756C-4C00-916F-4D78306FC663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB15C9BB-ADBF-46C4-8797-9676FCED7D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB15C9BB-ADBF-46C4-8797-9676FCED7D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB15C9BB-ADBF-46C4-8797-9676FCED7D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB15C9BB-ADBF-46C4-8797-9676FCED7D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
