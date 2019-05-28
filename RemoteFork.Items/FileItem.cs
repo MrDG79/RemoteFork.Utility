@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RemoteFork.Plugins;
 
 namespace RemoteFork.Items {
     public class FileItem : IItem {
@@ -14,10 +13,6 @@ namespace RemoteFork.Items {
         }
 
         public FileItem(FileItem item) : base(item) {
-            Link = item.Link;
-        }
-
-        public FileItem(Item item) : base(item) {
             Link = item.Link;
         }
     }

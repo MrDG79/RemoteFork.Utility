@@ -22,6 +22,7 @@ namespace RemoteFork.Settings {
         public string[] DlnaFileExtensions { get; set; }
         
         public bool Plugins { get; set; }
+        public bool PluginIcons { get; set; }
         public string[] EnablePlugins { get; set; }
         
         public string[] UserUrls { get; set; }

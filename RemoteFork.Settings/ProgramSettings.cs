@@ -24,6 +24,7 @@ namespace RemoteFork.Settings {
             DlnaFileExtensions = (new string[0]),
 
             Plugins = true,
+            PluginIcons = true,
             EnablePlugins = new string[0],
 
             UserUrls = new string[0],

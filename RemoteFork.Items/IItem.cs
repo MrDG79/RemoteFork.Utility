@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using RemoteFork.Plugins;
 
 namespace RemoteFork.Items {
     [Serializable]
@@ -24,13 +23,6 @@ namespace RemoteFork.Items {
 
         protected IItem(IItem item) {
             Title = item.Title;
-            ImageLink = item.ImageLink;
-            Description = item.Description;
-            GetInfo = item.GetInfo;
-        }
-
-        protected IItem(Item item) {
-            Title = item.Name;
             ImageLink = item.ImageLink;
             Description = item.Description;
             GetInfo = item.GetInfo;

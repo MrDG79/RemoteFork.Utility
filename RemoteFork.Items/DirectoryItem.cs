@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using RemoteFork.Plugins;
 
 namespace RemoteFork.Items {
     [Serializable]
@@ -16,10 +15,6 @@ namespace RemoteFork.Items {
         }
 
         public DirectoryItem(DirectoryItem item) : base(item) {
-            Link = item.Link;
-        }
-
-        public DirectoryItem(Item item) : base(item) {
             Link = item.Link;
         }
     }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
-using RemoteFork.Plugins;
 
 namespace RemoteFork.Items {
     [Serializable]
@@ -40,24 +38,6 @@ namespace RemoteFork.Items {
         public string Timeout;
 
         public PlayList() {
-
-        }
-
-        public PlayList(Playlist playlist) {
-            Source = playlist.source;
-            NextPageUrl = playlist.NextPageUrl;
-            GetInfo = playlist.GetInfo;
-            Timeout = playlist.Timeout;
-
-            IsIptv = playlist.IptvPlaylist || !string.IsNullOrEmpty(playlist.IsIptv);
-
-            if (playlist.Items != null) {
-                Items = new IItem[playlist.Items.Length];
-
-                for (int i = 0; i < Items.Length; i++) {
-                    Items[i] = ConvertItem(playlist.Items[i]);
-                }
-            }
         }
 
         public PlayList(IList<IItem> items) {
@@ -65,26 +45,6 @@ namespace RemoteFork.Items {
             for (int i = 0; i < Items.Length; i++) {
                 Items[i] = items[i];
             }
-        }
-
-        public PlayList(IList<Item> items) {
-            Items = new IItem[items.Count];
-            for (int i = 0; i < Items.Length; i++) {
-                Items[i] = ConvertItem(items[i]);
-            }
-        }
-
-        public IItem ConvertItem(Item item) {
-            switch (item.Type) {
-                case ItemType.DIRECTORY:
-                    return new DirectoryItem(item);
-                case ItemType.FILE:
-                    return new FileItem(item);
-                case ItemType.SEARCH:
-                    return new SearchItem(item);
-            }
-
-            return null;
         }
     }
 }

@@ -27,14 +27,14 @@ namespace RemoteFork.Network {
         }
 
         public static byte[] GetBytesRequest(string url, Dictionary<string, string> header = null,
-            bool autoredirect = true) {
-            return GetBytesRequestAsync(url, header, autoredirect).Result;
+            bool autoRedirect = true) {
+            return GetBytesRequestAsync(url, header, autoRedirect).Result;
         }
 
         public static async Task<byte[]> GetBytesRequestAsync(string url, Dictionary<string, string> header = null,
-            bool autoredirect = true) {
+            bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
@@ -51,14 +51,14 @@ namespace RemoteFork.Network {
         }
 
         public static string GetRequest(string url, Dictionary<string, string> header = null, bool verbose = false,
-            bool databyte = false, bool autoredirect = true) {
-            return GetRequestAsync(url, header, verbose, databyte, autoredirect).Result;
+            bool databyte = false, bool autoRedirect = true) {
+            return GetRequestAsync(url, header, verbose, databyte, autoRedirect).Result;
         }
 
         public static async Task<string> GetRequestAsync(string url, Dictionary<string, string> header = null, bool verbose = false,
-            bool databyte = false, bool autoredirect = true) {
+            bool databyte = false, bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
                         Log.LogDebug($"Get {url}");
@@ -75,14 +75,14 @@ namespace RemoteFork.Network {
         }
 
         public static byte[] PostBytesRequest(string url, string data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
-            return PostBytesRequestAsync(url, data, header, verbose, autoredirect).Result;
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
+            return PostBytesRequestAsync(url, data, header, verbose, autoRedirect).Result;
         }
 
         public static async Task<byte[]> PostBytesRequestAsync(string url, string data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -102,14 +102,14 @@ namespace RemoteFork.Network {
         }
 
         public static byte[] PostBytesRequest(string url, byte[] data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
-            return PostBytesRequestAsync(url, data, header, verbose, autoredirect).Result;
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
+            return PostBytesRequestAsync(url, data, header, verbose, autoRedirect).Result;
         }
 
         public static async Task<byte[]> PostBytesRequestAsync(string url, byte[] data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -118,6 +118,7 @@ namespace RemoteFork.Network {
                         SetContentType(content, header);
 
                         var response = await httpClient.PostAsync(url, content);
+
                         return await response.Content.ReadAsByteArrayAsync();
                     }
                 }
@@ -128,14 +129,14 @@ namespace RemoteFork.Network {
         }
 
         public static string PostRequest(string url, string data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
-            return PostRequestAsync(url, data, header, verbose, autoredirect).Result;
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
+            return PostRequestAsync(url, data, header, verbose, autoRedirect).Result;
         }
 
         public static async Task<string> PostRequestAsync(string url, string data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -155,14 +156,14 @@ namespace RemoteFork.Network {
         }
 
         public static string PostRequest(string url, byte[] data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
-            return PostRequestAsync(url, data, header, verbose, autoredirect).Result;
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
+            return PostRequestAsync(url, data, header, verbose, autoRedirect).Result;
         }
 
         public static async Task<string> PostRequestAsync(string url, byte[] data,
-            Dictionary<string, string> header = null, bool verbose = false, bool autoredirect = true) {
+            Dictionary<string, string> header = null, bool verbose = false, bool autoRedirect = true) {
             try {
-                using (var handler = CreateClientHandler(url, header, autoredirect)) {
+                using (var handler = CreateClientHandler(url, header, autoRedirect)) {
                     using (var httpClient = new HttpClient(handler)) {
                         AddHeader(httpClient, header);
 
@@ -185,7 +186,7 @@ namespace RemoteFork.Network {
 
             if (verbose) {
                 var headers = response.Headers.Concat(response.Content.Headers);
-                string sh = "";
+                string sh = string.Empty;
                 foreach (var i in headers) {
                     foreach (string j in i.Value) {
                         sh += i.Key + ": " + j + Environment.NewLine;
@@ -239,7 +240,7 @@ namespace RemoteFork.Network {
         }
 
         private static HttpMessageHandler CreateClientHandler(string url, Dictionary<string, string> header,
-            bool autoredirect, bool useProxy = false) {
+            bool autoRedirect, bool useProxy = false) {
             ParseCookiesInHeader(url, header);
             HttpMessageHandler result = null;
             if (ProgramSettings.Settings.UseProxy && ProxySettings != null) {
@@ -277,7 +278,7 @@ namespace RemoteFork.Network {
 
             if (result == null) {
                 var handler = new HttpClientHandler() {
-                    AllowAutoRedirect = autoredirect,
+                    AllowAutoRedirect = autoRedirect,
                     Proxy = ProgramSettings.Settings.UseProxy &&
                             (useProxy || !ProgramSettings.Settings.ProxyNotDefaultEnable)
                             && Proxy != null
