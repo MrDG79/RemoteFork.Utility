@@ -23,7 +23,7 @@ namespace RemoteFork.Items {
         public string Url;
 
         [JsonProperty("channels", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public IItem[] Items;
+        public List<IItem> Items;
 
         [JsonProperty("next_page_url", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string NextPageUrl;
@@ -41,9 +41,9 @@ namespace RemoteFork.Items {
         }
 
         public PlayList(IList<IItem> items) {
-            Items = new IItem[items.Count];
-            for (int i = 0; i < Items.Length; i++) {
-                Items[i] = items[i];
+            Items = new List<IItem>(items.Count);
+            for (int i = 0; i < items.Count; i++) {
+                Items.Add(items[i]);
             }
         }
     }

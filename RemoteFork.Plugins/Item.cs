@@ -1,4 +1,7 @@
-﻿namespace RemoteFork.Plugins {
+﻿using System;
+
+namespace RemoteFork.Plugins {
+    [Obsolete("Item, please use IItem instead.")]
     public class Item {
         public string Name;
         public string Link;

@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace RemoteFork.Plugins {
+    [Obsolete("Playlist, please use PlayList instead.")]
     public class Playlist {
         public static readonly Playlist EmptyPlaylist = new Playlist {
             Items = new Item[0]
