@@ -18,7 +18,7 @@ namespace RemoteFork.Plugins.Items.Converter {
                 Items = new List<IItem>(playlist.Items.Length);
 
                 for (int i = 0; i < playlist.Items.Length; i++) {
-                    Items[i] = ConvertItem(playlist.Items[i]);
+                    Items.Add(ConvertItem(playlist.Items[i]));
                 }
             }
         }
@@ -27,7 +27,7 @@ namespace RemoteFork.Plugins.Items.Converter {
             Items = new List<IItem>(items.Count);
 
             for (int i = 0; i < Items.Count; i++) {
-                Items[i] = ConvertItem(items[i]);
+                Items.Add(ConvertItem(items[i]));
             }
         }
 
@@ -40,19 +40,19 @@ namespace RemoteFork.Plugins.Items.Converter {
 
             switch (sourceItem.Type) {
                 case ItemType.DIRECTORY: {
-                    var tempItem = new DirectoryItem { Link = sourceItem.Link };
+                    var tempItem = new DirectoryItem {Link = sourceItem.Link};
 
                     destinationItem = tempItem;
                 }
                     break;
                 case ItemType.FILE: {
-                    var tempItem = new FileItem { Link = sourceItem.Link };
+                    var tempItem = new FileItem {Link = sourceItem.Link};
 
                     destinationItem = tempItem;
                 }
                     break;
                 case ItemType.SEARCH: {
-                    var tempItem = new SearchItem { Link = sourceItem.Link };
+                    var tempItem = new SearchItem {Link = sourceItem.Link};
 
                     destinationItem = tempItem;
                 }
