@@ -14,6 +14,9 @@ namespace RemoteFork.Items {
         public DirectoryItem() : base() {
         }
 
+        public DirectoryItem(IItem item) : base(item) {
+        }
+
         public DirectoryItem(DirectoryItem item) : base(item) {
             Link = item.Link;
         }

@@ -12,6 +12,9 @@ namespace RemoteFork.Items {
         public FileItem() : base() {
         }
 
+        public FileItem(IItem item) : base(item) {
+        }
+
         public FileItem(FileItem item) : base(item) {
             Link = item.Link;
         }

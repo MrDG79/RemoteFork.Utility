@@ -10,6 +10,9 @@ namespace RemoteFork.Items {
         public SearchItem() : base() {
         }
 
+        public SearchItem(IItem item) : base(item) {
+        }
+
         public SearchItem(SearchItem item) : base(item) {
         }
     }
